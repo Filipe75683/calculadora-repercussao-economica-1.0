@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIS e COFINS Própria Base - Calculadora de Repercussão Econômica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Calculadora de Repercussão Econômica</h1>
+        <p>PIS e COFINS Própria Base</p>
+    </header>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="20-salarios.html">20 Salários</a></li>
+            <li><a href="pis-cofins-base.html" class="active">PIS e COFINS Própria Base</a></li>
+            <li><a href="credito-icms-combustivel.html">Crédito ICMS Combustível</a></li>
+            <li><a href="fretes-fora.html">Fretes Fora</a></li>
+            <li><a href="exclusao-frete-ipi.html">Exclusão Frete IPI</a></li>
+            <li><a href="gross-up.html">Gross Up</a></li>
+            <li><a href="iss-bc-pis-cofins.html">ISS da BC PIS e COFINS</a></li>
+            <li><a href="destrava.html">Destrava</a></li>
+            <li><a href="pis-cofins-ipi.html">PIS e COFINS sobre IPI</a></li>
+            <li><a href="icms-entrada-pis-cofins.html">ICMS Entrada PIS COFINS</a></li>
+            <li><a href="exclusao-credito-icms-irpj.html">Exclusão Crédito ICMS IRPJ</a></li>
+            <li><a href="exclusao-icms-pis-cofins-ipi.html">Exclusão ICMS PIS COFINS IPI</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <div class="form-section">
+            <h2>Cálculo de PIS e COFINS sobre Própria Base</h2>
+            <p>Este cálculo determina os valores de PIS e COFINS aplicados sobre a base de cálculo própria da empresa.</p>
+            
+            <form id="pis-cofins-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="faturamento-bruto">Faturamento Bruto (R$):</label>
+                        <input type="number" id="faturamento-bruto" name="faturamento-bruto" step="0.01" placeholder="Ex: 1000000.00" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="regime-tributario">Regime Tributário:</label>
+                        <select id="regime-tributario" name="regime-tributario" required>
+                            <option value="">Selecione o regime</option>
+                            <option value="lucro-real">Lucro Real</option>
+                            <option value="lucro-presumido">Lucro Presumido</option>
+                            <option value="simples">Simples Nacional</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="aliquota-pis">Alíquota PIS (%):</label>
+                        <input type="number" id="aliquota-pis" name="aliquota-pis" step="0.01" placeholder="Ex: 1.65" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="aliquota-cofins">Alíquota COFINS (%):</label>
+                        <input type="number" id="aliquota-cofins" name="aliquota-cofins" step="0.01" placeholder="Ex: 7.60" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="deducoes">Deduções Permitidas (R$):</label>
+                        <input type="number" id="deducoes" name="deducoes" step="0.01" placeholder="Ex: 50000.00" value="0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="creditos">Créditos de PIS/COFINS (R$):</label>
+                        <input type="number" id="creditos" name="creditos" step="0.01" placeholder="Ex: 25000.00" value="0">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="periodo-calculo">Período de Cálculo:</label>
+                    <select id="periodo-calculo" name="periodo-calculo">
+                        <option value="mensal">Mensal</option>
+                        <option value="trimestral">Trimestral</option>
+                        <option value="anual">Anual</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <div class="results-section">
+            <h3>Resultados dos Cálculos</h3>
+            
+            <div class="result-item">
+                <label>Base de Cálculo (Faturamento - Deduções):</label>
+                <div class="result-value" id="base-calculo">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>PIS Devido:</label>
+                <div class="result-value" id="pis-devido">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>COFINS Devido:</label>
+                <div class="result-value" id="cofins-devido">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Total PIS + COFINS:</label>
+                <div class="result-value" id="total-pis-cofins">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Valor Líquido a Recolher (após créditos):</label>
+                <div class="result-value" id="valor-liquido">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Alíquota Efetiva (%):</label>
+                <div class="result-value" id="aliquota-efetiva">0,00%</div>
+            </div>
+        </div>
+
+        <div class="form-section mt-2">
+            <h3>Informações Adicionais</h3>
+            <div class="result-item">
+                <label>Regime Tributário Selecionado:</label>
+                <div class="result-value" id="regime-info">-</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Período de Apuração:</label>
+                <div class="result-value" id="periodo-info">-</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Observações:</label>
+                <div style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">
+                    <p>• Lucro Real: PIS 1,65% e COFINS 7,60% (não cumulativo)</p>
+                    <p>• Lucro Presumido: PIS 0,65% e COFINS 3,00% (cumulativo)</p>
+                    <p>• Simples Nacional: Alíquotas conforme anexo e faturamento</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Calculadora de Repercussão Econômica. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="pis-cofins-base.js"></script>
+</body>
+</html>
+

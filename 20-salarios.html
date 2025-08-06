@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>20 Salários - Calculadora de Repercussão Econômica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Calculadora de Repercussão Econômica</h1>
+        <p>Cálculo de 20 Salários</p>
+    </header>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="20-salarios.html" class="active">20 Salários</a></li>
+            <li><a href="pis-cofins-base.html">PIS e COFINS Própria Base</a></li>
+            <li><a href="credito-icms-combustivel.html">Crédito ICMS Combustível</a></li>
+            <li><a href="fretes-fora.html">Fretes Fora</a></li>
+            <li><a href="exclusao-frete-ipi.html">Exclusão Frete IPI</a></li>
+            <li><a href="gross-up.html">Gross Up</a></li>
+            <li><a href="iss-bc-pis-cofins.html">ISS da BC PIS e COFINS</a></li>
+            <li><a href="destrava.html">Destrava</a></li>
+            <li><a href="pis-cofins-ipi.html">PIS e COFINS sobre IPI</a></li>
+            <li><a href="icms-entrada-pis-cofins.html">ICMS Entrada PIS COFINS</a></li>
+            <li><a href="exclusao-credito-icms-irpj.html">Exclusão Crédito ICMS IRPJ</a></li>
+            <li><a href="exclusao-icms-pis-cofins-ipi.html">Exclusão ICMS PIS COFINS IPI</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <div class="form-section">
+            <h2>Cálculo de Economia Anual - 20 Salários</h2>
+            <p>Este cálculo determina a economia anual baseada na diferença entre o valor pago a terceiros e o equivalente a 20 salários mínimos.</p>
+            
+            <form id="salarios-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ano">Ano de Referência:</label>
+                        <input type="number" id="ano" name="ano" value="2024" min="2000" max="2030" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="salario-minimo">Salário Mínimo Vigente (R$):</label>
+                        <input type="number" id="salario-minimo" name="salario-minimo" step="0.01" placeholder="Ex: 1412.00" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="valor-terceiros">Valor Médio Pago pela Empresa a Terceiros (R$):</label>
+                        <input type="number" id="valor-terceiros" name="valor-terceiros" step="0.01" placeholder="Ex: 46400.00" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="meses-calculo">Número de Meses para Cálculo Anual:</label>
+                    <select id="meses-calculo" name="meses-calculo">
+                        <option value="12">12 meses (Ano completo)</option>
+                        <option value="6">6 meses</option>
+                        <option value="3">3 meses</option>
+                        <option value="1">1 mês</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <div class="results-section">
+            <h3>Resultados dos Cálculos</h3>
+            
+            <div class="result-item">
+                <label>20 Salários Mínimos:</label>
+                <div class="result-value" id="vinte-salarios">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Valor Terceiros (Mensal):</label>
+                <div class="result-value" id="terceiros-mensal">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Valor Pago a Maior (Mensal):</label>
+                <div class="result-value" id="valor-maior-mensal">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Economia no Período:</label>
+                <div class="result-value" id="economia-periodo">R$ 0,00</div>
+            </div>
+        </div>
+
+        <div class="form-section mt-2">
+            <h3>Histórico de Cálculos</h3>
+            <div class="table-container">
+                <table id="historico-table">
+                    <thead>
+                        <tr>
+                            <th>Ano</th>
+                            <th>Salário Mínimo</th>
+                            <th>20 Salários</th>
+                            <th>Terceiros</th>
+                            <th>Valor a Maior Mensal</th>
+                            <th>Economia Anual</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Dados serão inseridos via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="text-center mt-2">
+                <button type="button" id="adicionar-historico" class="btn">Adicionar ao Histórico</button>
+                <button type="button" id="limpar-historico" class="btn" style="background: #e74c3c;">Limpar Histórico</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Calculadora de Repercussão Econômica. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="20-salarios.js"></script>
+</body>
+</html>
+

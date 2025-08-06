@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gross Up - Calculadora de Repercussão Econômica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Calculadora de Repercussão Econômica</h1>
+        <p>Cálculo de Gross Up</p>
+    </header>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="20-salarios.html">20 Salários</a></li>
+            <li><a href="pis-cofins-base.html">PIS e COFINS Própria Base</a></li>
+            <li><a href="credito-icms-combustivel.html">Crédito ICMS Combustível</a></li>
+            <li><a href="fretes-fora.html">Fretes Fora</a></li>
+            <li><a href="exclusao-frete-ipi.html">Exclusão Frete IPI</a></li>
+            <li><a href="gross-up.html" class="active">Gross Up</a></li>
+            <li><a href="iss-bc-pis-cofins.html">ISS da BC PIS e COFINS</a></li>
+            <li><a href="destrava.html">Destrava</a></li>
+            <li><a href="pis-cofins-ipi.html">PIS e COFINS sobre IPI</a></li>
+            <li><a href="icms-entrada-pis-cofins.html">ICMS Entrada PIS COFINS</a></li>
+            <li><a href="exclusao-credito-icms-irpj.html">Exclusão Crédito ICMS IRPJ</a></li>
+            <li><a href="exclusao-icms-pis-cofins-ipi.html">Exclusão ICMS PIS COFINS IPI</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <div class="form-section">
+            <h2>Cálculo de Gross Up</h2>
+            <p>O Gross Up é um cálculo que determina o valor bruto necessário para que, após a incidência dos impostos, reste o valor líquido desejado.</p>
+            
+            <form id="gross-up-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="icms-incidente">ICMS Incidente (R$):</label>
+                        <input type="number" id="icms-incidente" name="icms-incidente" step="0.01" placeholder="Ex: 2333833.91" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="aliquota-pis-cofins">Alíquota PIS + COFINS (%):</label>
+                        <input type="number" id="aliquota-pis-cofins" name="aliquota-pis-cofins" step="0.01" placeholder="Ex: 9.25" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="valor-liquido-desejado">Valor Líquido Desejado (R$):</label>
+                        <input type="number" id="valor-liquido-desejado" name="valor-liquido-desejado" step="0.01" placeholder="Ex: 1000000.00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="aliquota-icms">Alíquota ICMS (%):</label>
+                        <input type="number" id="aliquota-icms" name="aliquota-icms" step="0.01" placeholder="Ex: 18.00" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="aliquota-pis">Alíquota PIS (%):</label>
+                        <input type="number" id="aliquota-pis" name="aliquota-pis" step="0.01" placeholder="Ex: 1.65" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="aliquota-cofins">Alíquota COFINS (%):</label>
+                        <input type="number" id="aliquota-cofins" name="aliquota-cofins" step="0.01" placeholder="Ex: 7.60" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tipo-calculo">Tipo de Cálculo:</label>
+                        <select id="tipo-calculo" name="tipo-calculo" required>
+                            <option value="">Selecione o tipo</option>
+                            <option value="gross-up-simples">Gross Up Simples</option>
+                            <option value="gross-up-composto">Gross Up Composto</option>
+                            <option value="calculo-reverso">Cálculo Reverso</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="incluir-ipi">Incluir IPI no Cálculo:</label>
+                        <select id="incluir-ipi" name="incluir-ipi">
+                            <option value="nao">Não</option>
+                            <option value="sim">Sim</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row" id="ipi-section" style="display: none;">
+                    <div class="form-group">
+                        <label for="aliquota-ipi">Alíquota IPI (%):</label>
+                        <input type="number" id="aliquota-ipi" name="aliquota-ipi" step="0.01" placeholder="Ex: 10.00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="base-ipi">Base de Cálculo IPI (R$):</label>
+                        <input type="number" id="base-ipi" name="base-ipi" step="0.01" placeholder="Ex: 500000.00">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="results-section">
+            <h3>Resultados dos Cálculos</h3>
+            
+            <div class="result-item">
+                <label>Valor Bruto Necessário (Gross Up):</label>
+                <div class="result-value" id="valor-bruto">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>ICMS Calculado:</label>
+                <div class="result-value" id="icms-calculado">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>PIS Calculado:</label>
+                <div class="result-value" id="pis-calculado">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>COFINS Calculado:</label>
+                <div class="result-value" id="cofins-calculado">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Total de Impostos:</label>
+                <div class="result-value" id="total-impostos">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Valor Líquido Resultante:</label>
+                <div class="result-value" id="valor-liquido-resultante">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Diferença (Bruto - Impostos):</label>
+                <div class="result-value" id="diferenca-calculo">R$ 0,00</div>
+            </div>
+        </div>
+
+        <div class="form-section mt-2">
+            <h3>Demonstrativo do Cálculo</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Descrição</th>
+                            <th>Base de Cálculo</th>
+                            <th>Alíquota</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Valor Bruto</td>
+                            <td id="demo-base-bruto">R$ 0,00</td>
+                            <td>-</td>
+                            <td id="demo-valor-bruto">R$ 0,00</td>
+                        </tr>
+                        <tr>
+                            <td>ICMS</td>
+                            <td id="demo-base-icms">R$ 0,00</td>
+                            <td id="demo-aliq-icms">0,00%</td>
+                            <td id="demo-valor-icms">R$ 0,00</td>
+                        </tr>
+                        <tr>
+                            <td>PIS</td>
+                            <td id="demo-base-pis">R$ 0,00</td>
+                            <td id="demo-aliq-pis">0,00%</td>
+                            <td id="demo-valor-pis">R$ 0,00</td>
+                        </tr>
+                        <tr>
+                            <td>COFINS</td>
+                            <td id="demo-base-cofins">R$ 0,00</td>
+                            <td id="demo-aliq-cofins">0,00%</td>
+                            <td id="demo-valor-cofins">R$ 0,00</td>
+                        </tr>
+                        <tr id="demo-ipi-row" style="display: none;">
+                            <td>IPI</td>
+                            <td id="demo-base-ipi-calc">R$ 0,00</td>
+                            <td id="demo-aliq-ipi">0,00%</td>
+                            <td id="demo-valor-ipi">R$ 0,00</td>
+                        </tr>
+                        <tr style="font-weight: bold; background-color: #f8f9fa;">
+                            <td>Valor Líquido</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td id="demo-valor-liquido">R$ 0,00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="form-section mt-2">
+            <h3>Informações sobre Gross Up</h3>
+            <div style="font-size: 0.9rem; color: #666;">
+                <p><strong>Conceito:</strong></p>
+                <p style="margin-left: 1rem; margin-top: 0.5rem;">
+                    O Gross Up é uma técnica de cálculo utilizada para determinar o valor bruto necessário para que, 
+                    após a incidência de todos os impostos, reste exatamente o valor líquido desejado.
+                </p>
+                
+                <p style="margin-top: 1rem;"><strong>Fórmula Básica:</strong></p>
+                <p style="margin-left: 1rem; margin-top: 0.5rem;">
+                    Valor Bruto = Valor Líquido ÷ (1 - Alíquota Total)
+                </p>
+                
+                <p style="margin-top: 1rem;"><strong>Tipos de Cálculo:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li><strong>Simples:</strong> Considera apenas uma alíquota total</li>
+                    <li><strong>Composto:</strong> Considera múltiplos impostos com bases diferentes</li>
+                    <li><strong>Reverso:</strong> Calcula o valor líquido a partir do bruto</li>
+                </ul>
+                
+                <p style="margin-top: 1rem;"><strong>Aplicações:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>Precificação de produtos e serviços</li>
+                    <li>Cálculo de remunerações líquidas</li>
+                    <li>Planejamento tributário</li>
+                    <li>Análise de viabilidade econômica</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Calculadora de Repercussão Econômica. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="gross-up.js"></script>
+</body>
+</html>
+

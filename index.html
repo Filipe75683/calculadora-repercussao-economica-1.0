@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Repercussão Econômica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Calculadora de Repercussão Econômica</h1>
+        <p>Sistema de cálculos tributários e econômicos</p>
+    </header>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="index.html" class="active">Início</a></li>
+            <li><a href="20-salarios.html">20 Salários</a></li>
+            <li><a href="pis-cofins-base.html">PIS e COFINS Própria Base</a></li>
+            <li><a href="credito-icms-combustivel.html">Crédito ICMS Combustível</a></li>
+            <li><a href="fretes-fora.html">Fretes Fora</a></li>
+            <li><a href="exclusao-frete-ipi.html">Exclusão Frete IPI</a></li>
+            <li><a href="gross-up.html">Gross Up</a></li>
+            <li><a href="iss-bc-pis-cofins.html">ISS da BC PIS e COFINS</a></li>
+            <li><a href="destrava.html">Destrava</a></li>
+            <li><a href="pis-cofins-ipi.html">PIS e COFINS sobre IPI</a></li>
+            <li><a href="icms-entrada-pis-cofins.html">ICMS Entrada PIS COFINS</a></li>
+            <li><a href="exclusao-credito-icms-irpj.html">Exclusão Crédito ICMS IRPJ</a></li>
+            <li><a href="exclusao-icms-pis-cofins-ipi.html">Exclusão ICMS PIS COFINS IPI</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <div class="welcome-section">
+            <h2>Bem-vindo à Calculadora de Repercussão Econômica</h2>
+            <p>Esta calculadora permite realizar diversos cálculos tributários e econômicos baseados em diferentes cenários. Selecione uma das opções no menu acima para começar:</p>
+            
+            <div class="calculator-grid">
+                <div class="calculator-card">
+                    <h3>20 Salários</h3>
+                    <p>Cálculo de economia anual baseado em salário mínimo e valores de terceiros</p>
+                    <a href="20-salarios.html" class="btn">Acessar</a>
+                </div>
+                
+                <div class="calculator-card">
+                    <h3>PIS e COFINS Própria Base</h3>
+                    <p>Cálculos relacionados ao PIS e COFINS sobre base própria</p>
+                    <a href="pis-cofins-base.html" class="btn">Acessar</a>
+                </div>
+                
+                <div class="calculator-card">
+                    <h3>Crédito ICMS Combustível</h3>
+                    <p>Cálculo de créditos de ICMS sobre combustíveis</p>
+                    <a href="credito-icms-combustivel.html" class="btn">Acessar</a>
+                </div>
+                
+                <div class="calculator-card">
+                    <h3>Fretes Fora</h3>
+                    <p>Cálculos de fretes iniciados fora do estado</p>
+                    <a href="fretes-fora.html" class="btn">Acessar</a>
+                </div>
+                
+                <div class="calculator-card">
+                    <h3>Exclusão Frete IPI</h3>
+                    <p>Exclusão do frete e demais despesas da base de cálculo do IPI</p>
+                    <a href="exclusao-frete-ipi.html" class="btn">Acessar</a>
+                </div>
+                
+                <div class="calculator-card">
+                    <h3>Gross Up</h3>
+                    <p>Cálculos de Gross Up para ICMS e alíquotas PIS/COFINS</p>
+                    <a href="gross-up.html" class="btn">Acessar</a>
+                </div>
+                
+                <div class="calculator-card">
+                    <h3>ISS da BC PIS e COFINS</h3>
+                    <p>Exclusão do ISS da base de cálculo do PIS e COFINS</p>
+                    <a href="iss-bc-pis-cofins.html" class="btn">Acessar</a>
+                </div>
+                
+                <div class="calculator-card">
+                    <h3>Destrava</h3>
+                    <p>Cálculo de saldo que pode ser destravado</p>
+                    <a href="destrava.html" class="btn">Acessar</a>
+                </div>
+                
+                <div class="calculator-card">
+                    <h3>PIS e COFINS sobre IPI</h3>
+                    <p>PIS e COFINS sobre IPI não recuperável</p>
+                    <a href="pis-cofins-ipi.html" class="btn">Acessar</a>
+                </div>
+                
+                <div class="calculator-card">
+                    <h3>ICMS Entrada PIS COFINS</h3>
+                    <p>Cálculos de ICMS de entrada para PIS e COFINS</p>
+                    <a href="icms-entrada-pis-cofins.html" class="btn">Acessar</a>
+                </div>
+                
+                <div class="calculator-card">
+                    <h3>Exclusão Crédito ICMS IRPJ</h3>
+                    <p>Exclusão crédito presumido ICMS da base do IRPJ e CSLL</p>
+                    <a href="exclusao-credito-icms-irpj.html" class="btn">Acessar</a>
+                </div>
+                
+                <div class="calculator-card">
+                    <h3>Exclusão ICMS PIS COFINS IPI</h3>
+                    <p>Exclusão do ICMS, PIS e COFINS da base de cálculo do IPI</p>
+                    <a href="exclusao-icms-pis-cofins-ipi.html" class="btn">Acessar</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Calculadora de Repercussão Econômica. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="auth.js"></script>
+    <script>
+        // Proteger a página principal
+        protectPage();
+        
+        // Adicionar elementos de autenticação quando a página carregar
+        document.addEventListener('DOMContentLoaded', () => {
+            addAuthElements();
+        });
+    </script>
+</body>
+</html>
+

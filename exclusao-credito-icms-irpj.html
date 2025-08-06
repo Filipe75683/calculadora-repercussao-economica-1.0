@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exclusão Crédito ICMS IRPJ - Calculadora de Repercussão Econômica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Calculadora de Repercussão Econômica</h1>
+        <p>Exclusão Crédito Presumido ICMS da Base do IRPJ e CSLL</p>
+    </header>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="20-salarios.html">20 Salários</a></li>
+            <li><a href="pis-cofins-base.html">PIS e COFINS Própria Base</a></li>
+            <li><a href="credito-icms-combustivel.html">Crédito ICMS Combustível</a></li>
+            <li><a href="fretes-fora.html">Fretes Fora</a></li>
+            <li><a href="exclusao-frete-ipi.html">Exclusão Frete IPI</a></li>
+            <li><a href="gross-up.html">Gross Up</a></li>
+            <li><a href="iss-bc-pis-cofins.html">ISS da BC PIS e COFINS</a></li>
+            <li><a href="destrava.html">Destrava</a></li>
+            <li><a href="pis-cofins-ipi.html">PIS e COFINS sobre IPI</a></li>
+            <li><a href="icms-entrada-pis-cofins.html">ICMS Entrada PIS COFINS</a></li>
+            <li><a href="exclusao-credito-icms-irpj.html" class="active">Exclusão Crédito ICMS IRPJ</a></li>
+            <li><a href="exclusao-icms-pis-cofins-ipi.html">Exclusão ICMS PIS COFINS IPI</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <div class="form-section">
+            <h2>Exclusão Crédito Presumido ICMS da Base do IRPJ e CSLL</h2>
+            <p>Este cálculo determina a economia fiscal resultante da exclusão do crédito presumido de ICMS da base de cálculo do IRPJ e CSLL.</p>
+            
+            <form id="exclusao-credito-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="credito-presumido">Crédito Presumido 01/2024 até 12/2024 (R$):</label>
+                        <input type="number" id="credito-presumido" name="credito-presumido" step="0.01" placeholder="Ex: 334376.77" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="aliquota-irpj">Alíquota IRPJ (%):</label>
+                        <input type="number" id="aliquota-irpj" name="aliquota-irpj" step="0.01" placeholder="Ex: 25.00" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="aliquota-csll">Alíquota CSLL (%):</label>
+                        <input type="number" id="aliquota-csll" name="aliquota-csll" step="0.01" placeholder="Ex: 9.00" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="regime-tributario">Regime Tributário:</label>
+                        <select id="regime-tributario" name="regime-tributario" required>
+                            <option value="">Selecione o regime</option>
+                            <option value="lucro-real">Lucro Real</option>
+                            <option value="lucro-presumido">Lucro Presumido</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="faturamento-periodo">Faturamento do Período (R$):</label>
+                        <input type="number" id="faturamento-periodo" name="faturamento-periodo" step="0.01" placeholder="Ex: 10000000.00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tipo-atividade">Tipo de Atividade:</label>
+                        <select id="tipo-atividade" name="tipo-atividade">
+                            <option value="">Selecione a atividade</option>
+                            <option value="comercio">Comércio</option>
+                            <option value="industria">Indústria</option>
+                            <option value="servicos">Serviços</option>
+                            <option value="mista">Atividade Mista</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="periodo-inicio">Período Início:</label>
+                        <input type="month" id="periodo-inicio" name="periodo-inicio" value="2024-01" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="periodo-fim">Período Fim:</label>
+                        <input type="month" id="periodo-fim" name="periodo-fim" value="2024-12" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="adicional-irpj">Aplicar Adicional IRPJ (10%):</label>
+                    <select id="adicional-irpj" name="adicional-irpj">
+                        <option value="nao">Não</option>
+                        <option value="sim">Sim</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <div class="results-section">
+            <h3>Resultados dos Cálculos</h3>
+            
+            <div class="result-item">
+                <label>Crédito Presumido ICMS:</label>
+                <div class="result-value" id="credito-icms">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Economia IRPJ:</label>
+                <div class="result-value" id="economia-irpj">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Economia CSLL:</label>
+                <div class="result-value" id="economia-csll">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Economia Adicional IRPJ:</label>
+                <div class="result-value" id="economia-adicional">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Economia Total:</label>
+                <div class="result-value" id="economia-total">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Percentual sobre Crédito:</label>
+                <div class="result-value" id="percentual-credito">0,00%</div>
+            </div>
+        </div>
+
+        <div class="form-section mt-2">
+            <h3>Demonstrativo de Cálculo</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tributo</th>
+                            <th>Base de Cálculo</th>
+                            <th>Alíquota</th>
+                            <th>Economia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>IRPJ</td>
+                            <td id="demo-base-irpj">R$ 0,00</td>
+                            <td id="demo-aliq-irpj">0,00%</td>
+                            <td id="demo-economia-irpj">R$ 0,00</td>
+                        </tr>
+                        <tr>
+                            <td>CSLL</td>
+                            <td id="demo-base-csll">R$ 0,00</td>
+                            <td id="demo-aliq-csll">0,00%</td>
+                            <td id="demo-economia-csll">R$ 0,00</td>
+                        </tr>
+                        <tr id="demo-adicional-row" style="display: none;">
+                            <td>Adicional IRPJ</td>
+                            <td id="demo-base-adicional">R$ 0,00</td>
+                            <td>10,00%</td>
+                            <td id="demo-economia-adicional-table">R$ 0,00</td>
+                        </tr>
+                        <tr style="font-weight: bold; background-color: #e8f5e8;">
+                            <td>Total</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td id="demo-economia-total">R$ 0,00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="form-section mt-2">
+            <h3>Análise Mensal</h3>
+            <div class="table-container">
+                <table id="analise-mensal-table">
+                    <thead>
+                        <tr>
+                            <th>Mês</th>
+                            <th>Crédito Presumido</th>
+                            <th>Economia IRPJ</th>
+                            <th>Economia CSLL</th>
+                            <th>Total Mensal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Dados serão inseridos via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="text-center mt-2">
+                <button type="button" id="gerar-analise-mensal" class="btn">Gerar Análise Mensal</button>
+                <button type="button" id="projetar-anual" class="btn" style="margin-left: 1rem;">Projetar Anual</button>
+            </div>
+        </div>
+
+        <div class="form-section mt-2">
+            <h3>Informações Legais</h3>
+            <div style="font-size: 0.9rem; color: #666;">
+                <p><strong>Base Legal:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>Lei 9.249/1995 (IRPJ e CSLL)</li>
+                    <li>Decreto 3.000/1999 (Regulamento do Imposto de Renda)</li>
+                    <li>Lei 9.430/1996 (Legislação Tributária Federal)</li>
+                    <li>Instrução Normativa RFB 1.700/2017</li>
+                </ul>
+                
+                <p style="margin-top: 1rem;"><strong>Conceitos:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li><strong>Crédito Presumido:</strong> Benefício fiscal concedido por alguns estados</li>
+                    <li><strong>Exclusão da Base:</strong> O crédito não deve compor a base do IRPJ e CSLL</li>
+                    <li><strong>Natureza Jurídica:</strong> Subvenção para investimento</li>
+                </ul>
+                
+                <p style="margin-top: 1rem;"><strong>Alíquotas Padrão:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>IRPJ: 15% + 10% adicional (sobre lucro que exceder R$ 240.000,00/ano)</li>
+                    <li>CSLL: 9% (atividades em geral) ou 15% (instituições financeiras)</li>
+                </ul>
+                
+                <p style="margin-top: 1rem;"><strong>Observações:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>A exclusão é um direito da empresa, não uma opção</li>
+                    <li>Deve ser feita na apuração do lucro real</li>
+                    <li>Gera economia significativa para empresas beneficiárias</li>
+                    <li>Recomenda-se acompanhamento contábil especializado</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Calculadora de Repercussão Econômica. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="exclusao-credito-icms-irpj.js"></script>
+</body>
+</html>
+

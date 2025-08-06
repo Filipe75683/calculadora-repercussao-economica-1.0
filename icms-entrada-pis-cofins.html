@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICMS Entrada PIS COFINS - Calculadora de Repercussão Econômica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Calculadora de Repercussão Econômica</h1>
+        <p>ICMS de Entrada para PIS e COFINS</p>
+    </header>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="20-salarios.html">20 Salários</a></li>
+            <li><a href="pis-cofins-base.html">PIS e COFINS Própria Base</a></li>
+            <li><a href="credito-icms-combustivel.html">Crédito ICMS Combustível</a></li>
+            <li><a href="fretes-fora.html">Fretes Fora</a></li>
+            <li><a href="exclusao-frete-ipi.html">Exclusão Frete IPI</a></li>
+            <li><a href="gross-up.html">Gross Up</a></li>
+            <li><a href="iss-bc-pis-cofins.html">ISS da BC PIS e COFINS</a></li>
+            <li><a href="destrava.html">Destrava</a></li>
+            <li><a href="pis-cofins-ipi.html">PIS e COFINS sobre IPI</a></li>
+            <li><a href="icms-entrada-pis-cofins.html" class="active">ICMS Entrada PIS COFINS</a></li>
+            <li><a href="exclusao-credito-icms-irpj.html">Exclusão Crédito ICMS IRPJ</a></li>
+            <li><a href="exclusao-icms-pis-cofins-ipi.html">Exclusão ICMS PIS COFINS IPI</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <div class="form-section">
+            <h2>ICMS de Entrada para Cálculo de PIS e COFINS</h2>
+            <p>Este cálculo determina o aproveitamento do ICMS de entrada como custo dedutível para fins de PIS e COFINS não cumulativos.</p>
+            
+            <form id="icms-entrada-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="valor-compra">Valor da Compra (com ICMS) (R$):</label>
+                        <input type="number" id="valor-compra" name="valor-compra" step="0.01" placeholder="Ex: 100000.00" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="icms-entrada">ICMS de Entrada (R$):</label>
+                        <input type="number" id="icms-entrada" name="icms-entrada" step="0.01" placeholder="Ex: 18000.00" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="aliquota-icms">Alíquota ICMS (%):</label>
+                        <input type="number" id="aliquota-icms" name="aliquota-icms" step="0.01" placeholder="Ex: 18.00" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="aliquota-pis">Alíquota PIS (%):</label>
+                        <input type="number" id="aliquota-pis" name="aliquota-pis" step="0.01" placeholder="Ex: 1.65" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="aliquota-cofins">Alíquota COFINS (%):</label>
+                        <input type="number" id="aliquota-cofins" name="aliquota-cofins" step="0.01" placeholder="Ex: 7.60" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tipo-operacao">Tipo de Operação:</label>
+                        <select id="tipo-operacao" name="tipo-operacao" required>
+                            <option value="">Selecione o tipo</option>
+                            <option value="revenda">Revenda</option>
+                            <option value="industrializacao">Industrialização</option>
+                            <option value="consumo">Consumo</option>
+                            <option value="ativo">Ativo Imobilizado</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="regime-tributario">Regime Tributário:</label>
+                        <select id="regime-tributario" name="regime-tributario">
+                            <option value="lucro-real">Lucro Real</option>
+                            <option value="lucro-presumido">Lucro Presumido</option>
+                            <option value="simples">Simples Nacional</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="credito-aproveitavel">ICMS é Creditável?</label>
+                        <select id="credito-aproveitavel" name="credito-aproveitavel" required>
+                            <option value="sim">Sim</option>
+                            <option value="nao">Não</option>
+                            <option value="parcial">Parcialmente</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row" id="percentual-credito-section" style="display: none;">
+                    <div class="form-group">
+                        <label for="percentual-credito">Percentual de Crédito (%):</label>
+                        <input type="number" id="percentual-credito" name="percentual-credito" step="0.01" max="100" placeholder="Ex: 50.00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="periodo-calculo">Período de Cálculo:</label>
+                        <select id="periodo-calculo" name="periodo-calculo">
+                            <option value="mensal">Mensal</option>
+                            <option value="trimestral">Trimestral</option>
+                            <option value="anual">Anual</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="results-section">
+            <h3>Resultados dos Cálculos</h3>
+            
+            <div class="result-item">
+                <label>Valor da Compra (sem ICMS):</label>
+                <div class="result-value" id="valor-sem-icms">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>ICMS Creditável:</label>
+                <div class="result-value" id="icms-creditavel">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>ICMS Não Creditável:</label>
+                <div class="result-value" id="icms-nao-creditavel">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Base PIS/COFINS (com ICMS não creditável):</label>
+                <div class="result-value" id="base-pis-cofins">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Crédito PIS:</label>
+                <div class="result-value" id="credito-pis">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Crédito COFINS:</label>
+                <div class="result-value" id="credito-cofins">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Total Créditos PIS/COFINS:</label>
+                <div class="result-value" id="total-creditos">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Benefício Fiscal Total:</label>
+                <div class="result-value" id="beneficio-total">R$ 0,00</div>
+            </div>
+        </div>
+
+        <div class="form-section mt-2">
+            <h3>Comparativo de Cenários</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cenário</th>
+                            <th>Base PIS/COFINS</th>
+                            <th>Crédito PIS</th>
+                            <th>Crédito COFINS</th>
+                            <th>Total Créditos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ICMS Totalmente Creditável</td>
+                            <td id="cenario-total-base">R$ 0,00</td>
+                            <td id="cenario-total-pis">R$ 0,00</td>
+                            <td id="cenario-total-cofins">R$ 0,00</td>
+                            <td id="cenario-total-creditos">R$ 0,00</td>
+                        </tr>
+                        <tr>
+                            <td>ICMS Não Creditável</td>
+                            <td id="cenario-nao-base">R$ 0,00</td>
+                            <td id="cenario-nao-pis">R$ 0,00</td>
+                            <td id="cenario-nao-cofins">R$ 0,00</td>
+                            <td id="cenario-nao-creditos">R$ 0,00</td>
+                        </tr>
+                        <tr style="font-weight: bold; background-color: #e8f5e8;">
+                            <td>Diferença</td>
+                            <td id="diferenca-base">R$ 0,00</td>
+                            <td id="diferenca-pis">R$ 0,00</td>
+                            <td id="diferenca-cofins">R$ 0,00</td>
+                            <td id="diferenca-creditos">R$ 0,00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="form-section mt-2">
+            <h3>Informações Legais</h3>
+            <div style="font-size: 0.9rem; color: #666;">
+                <p><strong>Base Legal:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>Lei 10.637/2002 (PIS não cumulativo)</li>
+                    <li>Lei 10.833/2003 (COFINS não cumulativo)</li>
+                    <li>Decreto 5.164/2004 (Regulamento da COFINS)</li>
+                    <li>Instrução Normativa RFB 404/2004</li>
+                </ul>
+                
+                <p style="margin-top: 1rem;"><strong>Conceitos Importantes:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li><strong>ICMS Creditável:</strong> Quando a operação gera direito a crédito de ICMS</li>
+                    <li><strong>ICMS Não Creditável:</strong> Integra o custo da mercadoria/serviço</li>
+                    <li><strong>Base PIS/COFINS:</strong> Inclui o ICMS não creditável</li>
+                    <li><strong>Crédito PIS/COFINS:</strong> Calculado sobre a base que inclui ICMS não creditável</li>
+                </ul>
+                
+                <p style="margin-top: 1rem;"><strong>Situações de Não Creditamento:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>Operações com produtos isentos ou não tributados</li>
+                    <li>Vendas para consumidor final não contribuinte</li>
+                    <li>Operações com produtos sujeitos à substituição tributária</li>
+                    <li>Empresas do Simples Nacional</li>
+                </ul>
+                
+                <p style="margin-top: 1rem;"><strong>Observações:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>O ICMS não creditável aumenta a base de cálculo do PIS e COFINS</li>
+                    <li>Isso gera maior crédito de PIS e COFINS para empresas no regime não cumulativo</li>
+                    <li>É importante analisar a destinação da mercadoria/serviço</li>
+                    <li>Controles adequados são essenciais para aproveitamento correto</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Calculadora de Repercussão Econômica. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="icms-entrada-pis-cofins.js"></script>
+</body>
+</html>
+

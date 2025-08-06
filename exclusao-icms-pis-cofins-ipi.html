@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exclusão ICMS PIS COFINS IPI - Calculadora de Repercussão Econômica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Calculadora de Repercussão Econômica</h1>
+        <p>Exclusão do ICMS, PIS e COFINS da Base de Cálculo do IPI</p>
+    </header>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="20-salarios.html">20 Salários</a></li>
+            <li><a href="pis-cofins-base.html">PIS e COFINS Própria Base</a></li>
+            <li><a href="credito-icms-combustivel.html">Crédito ICMS Combustível</a></li>
+            <li><a href="fretes-fora.html">Fretes Fora</a></li>
+            <li><a href="exclusao-frete-ipi.html">Exclusão Frete IPI</a></li>
+            <li><a href="gross-up.html">Gross Up</a></li>
+            <li><a href="iss-bc-pis-cofins.html">ISS da BC PIS e COFINS</a></li>
+            <li><a href="destrava.html">Destrava</a></li>
+            <li><a href="pis-cofins-ipi.html">PIS e COFINS sobre IPI</a></li>
+            <li><a href="icms-entrada-pis-cofins.html">ICMS Entrada PIS COFINS</a></li>
+            <li><a href="exclusao-credito-icms-irpj.html">Exclusão Crédito ICMS IRPJ</a></li>
+            <li><a href="exclusao-icms-pis-cofins-ipi.html" class="active">Exclusão ICMS PIS COFINS IPI</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <div class="form-section">
+            <h2>Exclusão do ICMS, PIS e COFINS da Base de Cálculo do IPI</h2>
+            <p>Este cálculo determina a economia fiscal resultante da exclusão do ICMS, PIS e COFINS da base de cálculo do IPI, conforme entendimento jurisprudencial.</p>
+            
+            <form id="exclusao-icms-pis-cofins-ipi-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="valor-produto">Valor do Produto (R$):</label>
+                        <input type="number" id="valor-produto" name="valor-produto" step="0.01" placeholder="Ex: 100000.00" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="aliquota-icms">Alíquota ICMS (%):</label>
+                        <input type="number" id="aliquota-icms" name="aliquota-icms" step="0.01" placeholder="Ex: 18.00" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="aliquota-pis">Alíquota PIS (%):</label>
+                        <input type="number" id="aliquota-pis" name="aliquota-pis" step="0.01" placeholder="Ex: 1.65" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="aliquota-cofins">Alíquota COFINS (%):</label>
+                        <input type="number" id="aliquota-cofins" name="aliquota-cofins" step="0.01" placeholder="Ex: 7.60" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="aliquota-ipi">Alíquota IPI (%):</label>
+                        <input type="number" id="aliquota-ipi" name="aliquota-ipi" step="0.01" placeholder="Ex: 10.00" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ncm">NCM do Produto:</label>
+                        <input type="text" id="ncm" name="ncm" placeholder="Ex: 8703.23.10" maxlength="10">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tipo-operacao">Tipo de Operação:</label>
+                        <select id="tipo-operacao" name="tipo-operacao" required>
+                            <option value="">Selecione o tipo</option>
+                            <option value="saida">Saída (Venda)</option>
+                            <option value="industrializacao">Industrialização</option>
+                            <option value="importacao">Importação</option>
+                            <option value="entrada">Entrada (Compra)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="regime-tributario">Regime Tributário:</label>
+                        <select id="regime-tributario" name="regime-tributario">
+                            <option value="lucro-real">Lucro Real</option>
+                            <option value="lucro-presumido">Lucro Presumido</option>
+                            <option value="simples">Simples Nacional</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="aplicar-exclusao">Aplicar Exclusão:</label>
+                        <select id="aplicar-exclusao" name="aplicar-exclusao">
+                            <option value="todos">ICMS + PIS + COFINS</option>
+                            <option value="icms">Apenas ICMS</option>
+                            <option value="pis-cofins">Apenas PIS e COFINS</option>
+                            <option value="nenhum">Nenhum (Base Atual)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="periodo-calculo">Período de Cálculo:</label>
+                        <select id="periodo-calculo" name="periodo-calculo">
+                            <option value="mensal">Mensal</option>
+                            <option value="trimestral">Trimestral</option>
+                            <option value="anual">Anual</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="results-section">
+            <h3>Resultados dos Cálculos</h3>
+            
+            <div class="result-item">
+                <label>Valor Base (sem impostos):</label>
+                <div class="result-value" id="valor-base">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>ICMS Destacado:</label>
+                <div class="result-value" id="icms-destacado">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>PIS Destacado:</label>
+                <div class="result-value" id="pis-destacado">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>COFINS Destacado:</label>
+                <div class="result-value" id="cofins-destacado">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Base IPI (com impostos):</label>
+                <div class="result-value" id="base-ipi-com">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Base IPI (sem impostos):</label>
+                <div class="result-value" id="base-ipi-sem">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>IPI (base atual):</label>
+                <div class="result-value" id="ipi-atual">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>IPI (base reduzida):</label>
+                <div class="result-value" id="ipi-reduzido">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Economia Total:</label>
+                <div class="result-value" id="economia-total">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Percentual de Economia:</label>
+                <div class="result-value" id="percentual-economia">0,00%</div>
+            </div>
+        </div>
+
+        <div class="form-section mt-2">
+            <h3>Comparativo de Cenários</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cenário</th>
+                            <th>Base de Cálculo IPI</th>
+                            <th>IPI Devido</th>
+                            <th>Economia</th>
+                            <th>% Economia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Base Atual (com impostos)</td>
+                            <td id="comp-base-atual">R$ 0,00</td>
+                            <td id="comp-ipi-atual">R$ 0,00</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Exclusão ICMS</td>
+                            <td id="comp-base-sem-icms">R$ 0,00</td>
+                            <td id="comp-ipi-sem-icms">R$ 0,00</td>
+                            <td id="comp-economia-icms">R$ 0,00</td>
+                            <td id="comp-perc-icms">0,00%</td>
+                        </tr>
+                        <tr>
+                            <td>Exclusão PIS/COFINS</td>
+                            <td id="comp-base-sem-pis-cofins">R$ 0,00</td>
+                            <td id="comp-ipi-sem-pis-cofins">R$ 0,00</td>
+                            <td id="comp-economia-pis-cofins">R$ 0,00</td>
+                            <td id="comp-perc-pis-cofins">0,00%</td>
+                        </tr>
+                        <tr style="font-weight: bold; background-color: #e8f5e8;">
+                            <td>Exclusão Total</td>
+                            <td id="comp-base-sem-todos">R$ 0,00</td>
+                            <td id="comp-ipi-sem-todos">R$ 0,00</td>
+                            <td id="comp-economia-total">R$ 0,00</td>
+                            <td id="comp-perc-total">0,00%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="form-section mt-2">
+            <h3>Informações Legais</h3>
+            <div style="font-size: 0.9rem; color: #666;">
+                <p><strong>Base Legal:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>Decreto 7.212/2010 (RIPI)</li>
+                    <li>Lei 4.502/1964 (IPI)</li>
+                    <li>STF - RE 566.819 (Exclusão do ICMS)</li>
+                    <li>STJ - Tema 69 (Exclusão do PIS e COFINS)</li>
+                </ul>
+                
+                <p style="margin-top: 1rem;"><strong>Jurisprudência Relevante:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li><strong>STF - RE 566.819:</strong> ICMS não compõe base de cálculo do IPI</li>
+                    <li><strong>STJ - REsp 1.221.170:</strong> PIS e COFINS não integram base do IPI</li>
+                    <li><strong>Súmula 237 STJ:</strong> Princípio da não cumulatividade</li>
+                </ul>
+                
+                <p style="margin-top: 1rem;"><strong>Metodologia de Cálculo:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>Base IPI = Valor da operação - ICMS - PIS - COFINS</li>
+                    <li>Economia = (Base atual - Base reduzida) × Alíquota IPI</li>
+                    <li>Aplicável a operações sujeitas ao IPI</li>
+                </ul>
+                
+                <p style="margin-top: 1rem;"><strong>Observações:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>A exclusão é um direito reconhecido pelo STF e STJ</li>
+                    <li>Gera economia significativa para indústrias</li>
+                    <li>Pode ser aplicada retroativamente (observados prazos decadenciais)</li>
+                    <li>Recomenda-se acompanhamento jurídico para implementação</li>
+                    <li>Importante verificar se o produto está sujeito ao IPI</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Calculadora de Repercussão Econômica. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="exclusao-icms-pis-cofins-ipi.js"></script>
+</body>
+</html>
+

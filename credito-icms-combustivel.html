@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crédito ICMS Combustível - Calculadora de Repercussão Econômica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Calculadora de Repercussão Econômica</h1>
+        <p>Crédito de ICMS sobre Combustível</p>
+    </header>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="20-salarios.html">20 Salários</a></li>
+            <li><a href="pis-cofins-base.html">PIS e COFINS Própria Base</a></li>
+            <li><a href="credito-icms-combustivel.html" class="active">Crédito ICMS Combustível</a></li>
+            <li><a href="fretes-fora.html">Fretes Fora</a></li>
+            <li><a href="exclusao-frete-ipi.html">Exclusão Frete IPI</a></li>
+            <li><a href="gross-up.html">Gross Up</a></li>
+            <li><a href="iss-bc-pis-cofins.html">ISS da BC PIS e COFINS</a></li>
+            <li><a href="destrava.html">Destrava</a></li>
+            <li><a href="pis-cofins-ipi.html">PIS e COFINS sobre IPI</a></li>
+            <li><a href="icms-entrada-pis-cofins.html">ICMS Entrada PIS COFINS</a></li>
+            <li><a href="exclusao-credito-icms-irpj.html">Exclusão Crédito ICMS IRPJ</a></li>
+            <li><a href="exclusao-icms-pis-cofins-ipi.html">Exclusão ICMS PIS COFINS IPI</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <div class="form-section">
+            <h2>Cálculo de Crédito de ICMS sobre Combustível</h2>
+            <p>Este cálculo determina o crédito de ICMS sobre combustíveis utilizados pela empresa, baseado nos CFOPs específicos.</p>
+            
+            <form id="icms-combustivel-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="cfop">CFOP (Código Fiscal de Operações):</label>
+                        <select id="cfop" name="cfop" required>
+                            <option value="">Selecione o CFOP</option>
+                            <option value="1653">1653 - Aquisição de combustível para consumo</option>
+                            <option value="2653">2653 - Aquisição de combustível de outro estado</option>
+                            <option value="1658">1658 - Transferência de combustível</option>
+                            <option value="2658">2658 - Transferência de combustível de outro estado</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="valor-combustivel">Valor Total do Combustível (R$):</label>
+                        <input type="number" id="valor-combustivel" name="valor-combustivel" step="0.01" placeholder="Ex: 100000.00" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="aliquota-icms">Alíquota ICMS (%):</label>
+                        <input type="number" id="aliquota-icms" name="aliquota-icms" step="0.01" placeholder="Ex: 18.00" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tipo-combustivel">Tipo de Combustível:</label>
+                        <select id="tipo-combustivel" name="tipo-combustivel" required>
+                            <option value="">Selecione o tipo</option>
+                            <option value="gasolina">Gasolina</option>
+                            <option value="diesel">Diesel</option>
+                            <option value="etanol">Etanol</option>
+                            <option value="gnv">GNV (Gás Natural Veicular)</option>
+                            <option value="outros">Outros</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="quantidade-litros">Quantidade (Litros):</label>
+                        <input type="number" id="quantidade-litros" name="quantidade-litros" step="0.01" placeholder="Ex: 5000.00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="finalidade">Finalidade do Combustível:</label>
+                        <select id="finalidade" name="finalidade" required>
+                            <option value="">Selecione a finalidade</option>
+                            <option value="producao">Processo Produtivo</option>
+                            <option value="transporte">Transporte de Mercadorias</option>
+                            <option value="administrativo">Uso Administrativo</option>
+                            <option value="revenda">Revenda</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="periodo-meses">Período de Cálculo (meses):</label>
+                        <input type="number" id="periodo-meses" name="periodo-meses" min="1" max="60" value="12" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="percentual-credito">Percentual de Crédito Permitido (%):</label>
+                        <input type="number" id="percentual-credito" name="percentual-credito" step="0.01" value="100" max="100" required>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="results-section">
+            <h3>Resultados dos Cálculos</h3>
+            
+            <div class="result-item">
+                <label>Base de Cálculo do ICMS:</label>
+                <div class="result-value" id="base-icms">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>ICMS Destacado na Nota:</label>
+                <div class="result-value" id="icms-destacado">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Crédito de ICMS Permitido:</label>
+                <div class="result-value" id="credito-permitido">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Valor por Litro (se informado):</label>
+                <div class="result-value" id="valor-litro">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Total do Período (60 meses):</label>
+                <div class="result-value" id="total-periodo">R$ 0,00</div>
+            </div>
+        </div>
+
+        <div class="form-section mt-2">
+            <h3>Detalhamento por CFOP</h3>
+            <div class="table-container">
+                <table id="cfop-table">
+                    <thead>
+                        <tr>
+                            <th>CFOP</th>
+                            <th>Descrição</th>
+                            <th>Valor</th>
+                            <th>ICMS</th>
+                            <th>Crédito</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Dados serão inseridos via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="text-center mt-2">
+                <button type="button" id="adicionar-cfop" class="btn">Adicionar CFOP</button>
+                <button type="button" id="calcular-total" class="btn">Calcular Total</button>
+                <button type="button" id="limpar-cfops" class="btn" style="background: #e74c3c;">Limpar Lista</button>
+            </div>
+        </div>
+
+        <div class="form-section mt-2">
+            <h3>Informações Legais</h3>
+            <div style="font-size: 0.9rem; color: #666;">
+                <p><strong>Base Legal:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>Lei Complementar 87/1996 (Lei Kandir)</li>
+                    <li>Convênio ICMS 52/2017</li>
+                    <li>Regulamento do ICMS de cada estado</li>
+                </ul>
+                
+                <p style="margin-top: 1rem;"><strong>Observações:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>O crédito de ICMS sobre combustível varia conforme a legislação estadual</li>
+                    <li>Alguns estados restringem o crédito para determinadas finalidades</li>
+                    <li>É necessário verificar a regulamentação específica do estado</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Calculadora de Repercussão Econômica. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="credito-icms-combustivel.js"></script>
+</body>
+</html>
+

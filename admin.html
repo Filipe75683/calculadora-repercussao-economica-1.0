@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração - Calculadora de Repercussão Econômica</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logout-btn {
+            background: #e74c3c;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+        
+        .admin-section {
+            background: white;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .admin-section h3 {
+            margin-top: 0;
+            color: #333;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+        
+        .user-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 1rem;
+            align-items: end;
+            margin-bottom: 1rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .form-group input, .form-group select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+        
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+        
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .btn-warning:hover {
+            background: #e67e22;
+        }
+        
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .users-table th,
+        .users-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .users-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .status-online {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .status-offline {
+            color: #95a5a6;
+        }
+        
+        .admin-badge {
+            background: #9b59b6;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+        }
+        
+        .message {
+            padding: 0.75rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        
+        .message.error {
+            background: #fdf2f2;
+            color: #e74c3c;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .message.success {
+            background: #f2fdf2;
+            color: #27ae60;
+            border-left: 4px solid #27ae60;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            color: #666;
+            padding: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .user-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Calculadora de Repercussão Econômica</h1>
+        <p>Painel de Administração</p>
+    </header>
+
+    <main class="admin-container">
+        <div class="admin-header">
+            <div>
+                <h2>Painel de Administração</h2>
+                <div class="user-info">
+                    <span>Logado como: <strong id="current-user">Carregando...</strong></span>
+                </div>
+            </div>
+            <div>
+                <a href="index.html" class="btn btn-primary" style="margin-right: 1rem;">Voltar à Calculadora</a>
+                <button id="logout-btn" class="logout-btn">Sair</button>
+            </div>
+        </div>
+
+        <div id="message" class="message"></div>
+        <div id="loading" class="loading">Carregando...</div>
+
+        <div class="admin-section">
+            <h3>Adicionar Novo Usuário</h3>
+            <form id="add-user-form" class="user-form">
+                <div class="form-group">
+                    <label for="new-username">Nome de Usuário:</label>
+                    <input type="text" id="new-username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="new-password">Senha:</label>
+                    <input type="password" id="new-password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="is-admin">Tipo de Usuário:</label>
+                    <select id="is-admin" name="is_admin">
+                        <option value="false">Usuário Normal</option>
+                        <option value="true">Administrador</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Adicionar Usuário</button>
+            </form>
+        </div>
+
+        <div class="admin-section">
+            <h3>Usuários do Sistema</h3>
+            <div style="margin-bottom: 1rem;">
+                <button id="refresh-users" class="btn btn-primary">Atualizar Lista</button>
+                <button id="cleanup-sessions" class="btn btn-warning">Limpar Sessões Expiradas</button>
+            </div>
+            
+            <table class="users-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Usuário</th>
+                        <th>Tipo</th>
+                        <th>Status</th>
+                        <th>Criado em</th>
+                        <th>Último Login</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="users-table-body">
+                    <tr>
+                        <td colspan="7" style="text-align: center; color: #666;">Carregando usuários...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Calculadora de Repercussão Econômica. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:5000';
+        
+        // Elementos do DOM
+        const currentUserEl = document.getElementById('current-user');
+        const messageEl = document.getElementById('message');
+        const loadingEl = document.getElementById('loading');
+        const addUserForm = document.getElementById('add-user-form');
+        const usersTableBody = document.getElementById('users-table-body');
+        const logoutBtn = document.getElementById('logout-btn');
+        const refreshUsersBtn = document.getElementById('refresh-users');
+        const cleanupSessionsBtn = document.getElementById('cleanup-sessions');
+        
+        // Verificar autenticação ao carregar a página
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+        });
+        
+        // Função para obter token de autenticação
+        function getAuthToken() {
+            return localStorage.getItem('auth_token');
+        }
+        
+        // Função para obter headers de autenticação
+        function getAuthHeaders() {
+            const token = getAuthToken();
+            return {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            };
+        }
+        
+        // Função para mostrar mensagem
+        function showMessage(text, type = 'success') {
+            messageEl.textContent = text;
+            messageEl.className = `message ${type}`;
+            messageEl.style.display = 'block';
+            
+            // Esconder mensagem após 5 segundos
+            setTimeout(() => {
+                messageEl.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Função para mostrar/esconder loading
+        function setLoading(isLoading) {
+            loadingEl.style.display = isLoading ? 'block' : 'none';
+        }
+        
+        // Função para verificar autenticação
+        async function checkAuth() {
+            const token = getAuthToken();
+            if (!token) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/check`, {
+                    headers: getAuthHeaders()
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (!data.user.is_admin) {
+                        showMessage('Acesso negado. Apenas administradores podem acessar esta página.', 'error');
+                        setTimeout(() => {
+                            window.location.href = 'index.html';
+                        }, 2000);
+                        return;
+                    }
+                    
+                    currentUserEl.textContent = data.user.username;
+                    loadUsers();
+                } else {
+                    localStorage.removeItem('auth_token');
+                    localStorage.removeItem('user_data');
+                    window.location.href = 'login.html';
+                }
+            } catch (error) {
+                console.error('Erro ao verificar autenticação:', error);
+                showMessage('Erro de conexão com o servidor.', 'error');
+            }
+        }
+        
+        // Função para carregar usuários
+        async function loadUsers() {
+            setLoading(true);
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/users`, {
+                    headers: getAuthHeaders()
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    displayUsers(data.users);
+                } else {
+                    showMessage('Erro ao carregar usuários.', 'error');
+                }
+            } catch (error) {
+                console.error('Erro ao carregar usuários:', error);
+                showMessage('Erro de conexão ao carregar usuários.', 'error');
+            }
+            
+            setLoading(false);
+        }
+        
+        // Função para exibir usuários na tabela
+        function displayUsers(users) {
+            if (users.length === 0) {
+                usersTableBody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #666;">Nenhum usuário encontrado.</td></tr>';
+                return;
+            }
+            
+            usersTableBody.innerHTML = users.map(user => {
+                const createdAt = user.created_at ? new Date(user.created_at).toLocaleString('pt-BR') : 'N/A';
+                const lastLogin = user.last_login ? new Date(user.last_login).toLocaleString('pt-BR') : 'Nunca';
+                const status = user.is_online ? '<span class="status-online">Online</span>' : '<span class="status-offline">Offline</span>';
+                const userType = user.is_admin ? '<span class="admin-badge">Admin</span>' : 'Usuário';
+                
+                return `
+                    <tr>
+                        <td>${user.id}</td>
+                        <td>${user.username}</td>
+                        <td>${userType}</td>
+                        <td>${status}</td>
+                        <td>${createdAt}</td>
+                        <td>${lastLogin}</td>
+                        <td>
+                            ${user.is_online ? `<button onclick="forceLogout(${user.id}, '${user.username}')" class="btn btn-warning" style="margin-right: 0.5rem;">Desconectar</button>` : ''}
+                            <button onclick="deleteUser(${user.id}, '${user.username}')" class="btn btn-danger">Excluir</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+        
+        // Função para adicionar usuário
+        async function addUser(username, password, isAdmin) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/register`, {
+                    method: 'POST',
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify({
+                        username: username,
+                        password: password,
+                        is_admin: isAdmin
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showMessage(`Usuário ${username} adicionado com sucesso!`);
+                    addUserForm.reset();
+                    loadUsers();
+                } else {
+                    showMessage(data.message || 'Erro ao adicionar usuário.', 'error');
+                }
+            } catch (error) {
+                console.error('Erro ao adicionar usuário:', error);
+                showMessage('Erro de conexão ao adicionar usuário.', 'error');
+            }
+        }
+        
+        // Função para deletar usuário
+        async function deleteUser(userId, username) {
+            if (!confirm(`Tem certeza que deseja excluir o usuário "${username}"?`)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
+                    method: 'DELETE',
+                    headers: getAuthHeaders()
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showMessage(`Usuário ${username} excluído com sucesso!`);
+                    loadUsers();
+                } else {
+                    showMessage(data.message || 'Erro ao excluir usuário.', 'error');
+                }
+            } catch (error) {
+                console.error('Erro ao excluir usuário:', error);
+                showMessage('Erro de conexão ao excluir usuário.', 'error');
+            }
+        }
+        
+        // Função para forçar logout
+        async function forceLogout(userId, username) {
+            if (!confirm(`Tem certeza que deseja desconectar o usuário "${username}"?`)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/users/${userId}/logout`, {
+                    method: 'POST',
+                    headers: getAuthHeaders()
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showMessage(`Usuário ${username} desconectado com sucesso!`);
+                    loadUsers();
+                } else {
+                    showMessage(data.message || 'Erro ao desconectar usuário.', 'error');
+                }
+            } catch (error) {
+                console.error('Erro ao desconectar usuário:', error);
+                showMessage('Erro de conexão ao desconectar usuário.', 'error');
+            }
+        }
+        
+        // Função para limpar sessões expiradas
+        async function cleanupSessions() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/admin/cleanup`, {
+                    method: 'POST',
+                    headers: getAuthHeaders()
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showMessage(`Limpeza concluída. ${data.expired_sessions_removed} sessões expiradas removidas.`);
+                    loadUsers();
+                } else {
+                    showMessage(data.message || 'Erro ao limpar sessões.', 'error');
+                }
+            } catch (error) {
+                console.error('Erro ao limpar sessões:', error);
+                showMessage('Erro de conexão ao limpar sessões.', 'error');
+            }
+        }
+        
+        // Função para fazer logout
+        async function logout() {
+            try {
+                await fetch(`${API_BASE_URL}/logout`, {
+                    method: 'POST',
+                    headers: getAuthHeaders()
+                });
+            } catch (error) {
+                console.error('Erro ao fazer logout:', error);
+            }
+            
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('user_data');
+            window.location.href = 'login.html';
+        }
+        
+        // Event listeners
+        addUserForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('new-username').value.trim();
+            const password = document.getElementById('new-password').value;
+            const isAdmin = document.getElementById('is-admin').value === 'true';
+            
+            if (!username || !password) {
+                showMessage('Por favor, preencha todos os campos.', 'error');
+                return;
+            }
+            
+            addUser(username, password, isAdmin);
+        });
+        
+        logoutBtn.addEventListener('click', logout);
+        refreshUsersBtn.addEventListener('click', loadUsers);
+        cleanupSessionsBtn.addEventListener('click', cleanupSessions);
+        
+        // Tornar funções globais para uso nos botões da tabela
+        window.deleteUser = deleteUser;
+        window.forceLogout = forceLogout;
+    </script>
+</body>
+</html>
+

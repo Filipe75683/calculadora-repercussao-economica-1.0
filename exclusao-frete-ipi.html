@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exclusão Frete IPI - Calculadora de Repercussão Econômica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Calculadora de Repercussão Econômica</h1>
+        <p>Exclusão do Frete e Demais Despesas da Base de Cálculo do IPI</p>
+    </header>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="20-salarios.html">20 Salários</a></li>
+            <li><a href="pis-cofins-base.html">PIS e COFINS Própria Base</a></li>
+            <li><a href="credito-icms-combustivel.html">Crédito ICMS Combustível</a></li>
+            <li><a href="fretes-fora.html">Fretes Fora</a></li>
+            <li><a href="exclusao-frete-ipi.html" class="active">Exclusão Frete IPI</a></li>
+            <li><a href="gross-up.html">Gross Up</a></li>
+            <li><a href="iss-bc-pis-cofins.html">ISS da BC PIS e COFINS</a></li>
+            <li><a href="destrava.html">Destrava</a></li>
+            <li><a href="pis-cofins-ipi.html">PIS e COFINS sobre IPI</a></li>
+            <li><a href="icms-entrada-pis-cofins.html">ICMS Entrada PIS COFINS</a></li>
+            <li><a href="exclusao-credito-icms-irpj.html">Exclusão Crédito ICMS IRPJ</a></li>
+            <li><a href="exclusao-icms-pis-cofins-ipi.html">Exclusão ICMS PIS COFINS IPI</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <div class="form-section">
+            <h2>Exclusão do Frete e Demais Despesas da Base de Cálculo do IPI</h2>
+            <p>Este cálculo determina a economia fiscal resultante da exclusão do frete e outras despesas acessórias da base de cálculo do IPI.</p>
+            
+            <form id="exclusao-frete-ipi-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="valor-produto">Valor do Produto (sem frete) (R$):</label>
+                        <input type="number" id="valor-produto" name="valor-produto" step="0.01" placeholder="Ex: 100000.00" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="valor-frete">Valor do Frete (R$):</label>
+                        <input type="number" id="valor-frete" name="valor-frete" step="0.01" placeholder="Ex: 5000.00" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="valor-seguro">Valor do Seguro (R$):</label>
+                        <input type="number" id="valor-seguro" name="valor-seguro" step="0.01" placeholder="Ex: 500.00" value="0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="outras-despesas">Outras Despesas Acessórias (R$):</label>
+                        <input type="number" id="outras-despesas" name="outras-despesas" step="0.01" placeholder="Ex: 300.00" value="0">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="aliquota-ipi">Alíquota do IPI (%):</label>
+                        <input type="number" id="aliquota-ipi" name="aliquota-ipi" step="0.01" placeholder="Ex: 10.00" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tipo-operacao">Tipo de Operação:</label>
+                        <select id="tipo-operacao" name="tipo-operacao" required>
+                            <option value="">Selecione o tipo</option>
+                            <option value="saida">Saída (Venda)</option>
+                            <option value="entrada">Entrada (Compra)</option>
+                            <option value="industrializacao">Industrialização</option>
+                            <option value="importacao">Importação</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ncm">NCM (Nomenclatura Comum do Mercosul):</label>
+                        <input type="text" id="ncm" name="ncm" placeholder="Ex: 8703.23.10" maxlength="10">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="modalidade-frete">Modalidade do Frete:</label>
+                        <select id="modalidade-frete" name="modalidade-frete">
+                            <option value="cif">CIF (Por conta do remetente)</option>
+                            <option value="fob">FOB (Por conta do destinatário)</option>
+                            <option value="terceiros">Por conta de terceiros</option>
+                            <option value="proprio">Transporte próprio</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="periodo-calculo">Período de Cálculo:</label>
+                    <select id="periodo-calculo" name="periodo-calculo">
+                        <option value="mensal">Mensal</option>
+                        <option value="trimestral">Trimestral</option>
+                        <option value="semestral">Semestral</option>
+                        <option value="anual">Anual</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <div class="results-section">
+            <h3>Resultados dos Cálculos</h3>
+            
+            <div class="result-item">
+                <label>Valor Total da Operação (com frete e despesas):</label>
+                <div class="result-value" id="valor-total-operacao">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Base de Cálculo IPI (com frete):</label>
+                <div class="result-value" id="base-ipi-com-frete">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Base de Cálculo IPI (sem frete):</label>
+                <div class="result-value" id="base-ipi-sem-frete">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>IPI Calculado (com frete):</label>
+                <div class="result-value" id="ipi-com-frete">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>IPI Calculado (sem frete):</label>
+                <div class="result-value" id="ipi-sem-frete">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Economia com a Exclusão:</label>
+                <div class="result-value" id="economia-exclusao">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Percentual de Economia:</label>
+                <div class="result-value" id="percentual-economia">0,00%</div>
+            </div>
+        </div>
+
+        <div class="form-section mt-2">
+            <h3>Detalhamento das Despesas</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tipo de Despesa</th>
+                            <th>Valor</th>
+                            <th>Incluir na Base IPI?</th>
+                            <th>Economia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Valor do Produto</td>
+                            <td id="detalhe-produto">R$ 0,00</td>
+                            <td>Sim</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Frete</td>
+                            <td id="detalhe-frete">R$ 0,00</td>
+                            <td>Não (Exclusão)</td>
+                            <td id="economia-frete">R$ 0,00</td>
+                        </tr>
+                        <tr>
+                            <td>Seguro</td>
+                            <td id="detalhe-seguro">R$ 0,00</td>
+                            <td>Não (Exclusão)</td>
+                            <td id="economia-seguro">R$ 0,00</td>
+                        </tr>
+                        <tr>
+                            <td>Outras Despesas</td>
+                            <td id="detalhe-outras">R$ 0,00</td>
+                            <td>Não (Exclusão)</td>
+                            <td id="economia-outras">R$ 0,00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="form-section mt-2">
+            <h3>Informações Legais</h3>
+            <div style="font-size: 0.9rem; color: #666;">
+                <p><strong>Base Legal:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>Decreto 7.212/2010 (RIPI) - Art. 14, § 1º</li>
+                    <li>Lei 4.502/1964 - Art. 14</li>
+                    <li>Súmula 237 do STJ</li>
+                </ul>
+                
+                <p style="margin-top: 1rem;"><strong>Jurisprudência:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>STJ - Súmula 237: "Nas operações com cartão de crédito, os encargos relativos ao financiamento são considerados como acréscimo ao preço da mercadoria ou serviço para efeitos do ICMS"</li>
+                    <li>O frete, quando destacado na nota fiscal, não compõe a base de cálculo do IPI</li>
+                </ul>
+                
+                <p style="margin-top: 1rem;"><strong>Observações:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>A exclusão do frete da base do IPI é permitida quando o frete é destacado na nota fiscal</li>
+                    <li>O seguro e outras despesas acessórias também podem ser excluídas se destacadas</li>
+                    <li>É importante verificar se o produto está sujeito ao IPI conforme a TIPI</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Calculadora de Repercussão Econômica. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="exclusao-frete-ipi.js"></script>
+</body>
+</html>
+

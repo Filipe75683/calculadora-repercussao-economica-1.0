@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIS e COFINS sobre IPI - Calculadora de Repercussão Econômica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Calculadora de Repercussão Econômica</h1>
+        <p>PIS e COFINS sobre IPI Não Recuperável</p>
+    </header>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="20-salarios.html">20 Salários</a></li>
+            <li><a href="pis-cofins-base.html">PIS e COFINS Própria Base</a></li>
+            <li><a href="credito-icms-combustivel.html">Crédito ICMS Combustível</a></li>
+            <li><a href="fretes-fora.html">Fretes Fora</a></li>
+            <li><a href="exclusao-frete-ipi.html">Exclusão Frete IPI</a></li>
+            <li><a href="gross-up.html">Gross Up</a></li>
+            <li><a href="iss-bc-pis-cofins.html">ISS da BC PIS e COFINS</a></li>
+            <li><a href="destrava.html">Destrava</a></li>
+            <li><a href="pis-cofins-ipi.html" class="active">PIS e COFINS sobre IPI</a></li>
+            <li><a href="icms-entrada-pis-cofins.html">ICMS Entrada PIS COFINS</a></li>
+            <li><a href="exclusao-credito-icms-irpj.html">Exclusão Crédito ICMS IRPJ</a></li>
+            <li><a href="exclusao-icms-pis-cofins-ipi.html">Exclusão ICMS PIS COFINS IPI</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <div class="form-section">
+            <h2>PIS e COFINS sobre IPI Não Recuperável</h2>
+            <p>Este cálculo determina a incidência de PIS e COFINS sobre o IPI não recuperável, especialmente em produtos de revenda.</p>
+            
+            <form id="pis-cofins-ipi-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ipi-produto-revenda">IPI (produto de revenda) (R$):</label>
+                        <input type="number" id="ipi-produto-revenda" name="ipi-produto-revenda" step="0.01" placeholder="Ex: 50000.00" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="aliquota-pis">Alíquota PIS (%):</label>
+                        <input type="number" id="aliquota-pis" name="aliquota-pis" step="0.01" placeholder="Ex: 1.65" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="aliquota-cofins">Alíquota COFINS (%):</label>
+                        <input type="number" id="aliquota-cofins" name="aliquota-cofins" step="0.01" placeholder="Ex: 7.60" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tipo-produto">Tipo de Produto:</label>
+                        <select id="tipo-produto" name="tipo-produto" required>
+                            <option value="">Selecione o tipo</option>
+                            <option value="revenda">Produto de Revenda</option>
+                            <option value="industrializacao">Produto para Industrialização</option>
+                            <option value="consumo">Produto de Consumo</option>
+                            <option value="ativo">Ativo Imobilizado</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ncm">NCM do Produto:</label>
+                        <input type="text" id="ncm" name="ncm" placeholder="Ex: 8703.23.10" maxlength="10">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="aliquota-ipi">Alíquota IPI (%):</label>
+                        <input type="number" id="aliquota-ipi" name="aliquota-ipi" step="0.01" placeholder="Ex: 10.00" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="valor-produto">Valor do Produto (sem IPI) (R$):</label>
+                        <input type="number" id="valor-produto" name="valor-produto" step="0.01" placeholder="Ex: 500000.00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="recuperavel-ipi">IPI é Recuperável?</label>
+                        <select id="recuperavel-ipi" name="recuperavel-ipi" required>
+                            <option value="nao">Não</option>
+                            <option value="sim">Sim</option>
+                            <option value="parcial">Parcialmente</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row" id="percentual-recuperacao-section" style="display: none;">
+                    <div class="form-group">
+                        <label for="percentual-recuperacao">Percentual de Recuperação (%):</label>
+                        <input type="number" id="percentual-recuperacao" name="percentual-recuperacao" step="0.01" max="100" placeholder="Ex: 50.00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="regime-tributario">Regime Tributário:</label>
+                        <select id="regime-tributario" name="regime-tributario">
+                            <option value="lucro-real">Lucro Real</option>
+                            <option value="lucro-presumido">Lucro Presumido</option>
+                            <option value="simples">Simples Nacional</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="results-section">
+            <h3>Resultados dos Cálculos</h3>
+            
+            <div class="result-item">
+                <label>IPI Não Recuperável:</label>
+                <div class="result-value" id="ipi-nao-recuperavel">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>PIS sobre IPI Não Recuperável:</label>
+                <div class="result-value" id="pis-sobre-ipi">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>COFINS sobre IPI Não Recuperável:</label>
+                <div class="result-value" id="cofins-sobre-ipi">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Total PIS + COFINS sobre IPI:</label>
+                <div class="result-value" id="total-pis-cofins-ipi">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Custo Total Adicional:</label>
+                <div class="result-value" id="custo-adicional">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Percentual sobre Valor do Produto:</label>
+                <div class="result-value" id="percentual-produto">0,00%</div>
+            </div>
+        </div>
+
+        <div class="form-section mt-2">
+            <h3>Análise de Recuperabilidade</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Situação</th>
+                            <th>IPI Total</th>
+                            <th>IPI Recuperável</th>
+                            <th>IPI Não Recuperável</th>
+                            <th>PIS/COFINS Incidente</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Atual</td>
+                            <td id="analise-ipi-total">R$ 0,00</td>
+                            <td id="analise-ipi-recuperavel">R$ 0,00</td>
+                            <td id="analise-ipi-nao-recuperavel">R$ 0,00</td>
+                            <td id="analise-pis-cofins">R$ 0,00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="form-section mt-2">
+            <h3>Informações Legais</h3>
+            <div style="font-size: 0.9rem; color: #666;">
+                <p><strong>Base Legal:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>Lei 10.637/2002 (PIS não cumulativo)</li>
+                    <li>Lei 10.833/2003 (COFINS não cumulativo)</li>
+                    <li>Decreto 4.524/2002 (Regulamento do PIS)</li>
+                    <li>Decreto 5.164/2004 (Regulamento da COFINS)</li>
+                </ul>
+                
+                <p style="margin-top: 1rem;"><strong>Conceitos Importantes:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li><strong>IPI Recuperável:</strong> Quando o produto é destinado à industrialização ou revenda</li>
+                    <li><strong>IPI Não Recuperável:</strong> Quando o produto é para consumo próprio ou ativo imobilizado</li>
+                    <li><strong>Base de Cálculo:</strong> O valor do IPI não recuperável integra a base do PIS e COFINS</li>
+                </ul>
+                
+                <p style="margin-top: 1rem;"><strong>Observações:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>O IPI não recuperável aumenta o custo do produto</li>
+                    <li>PIS e COFINS incidem sobre o valor total, incluindo o IPI não recuperável</li>
+                    <li>A recuperabilidade depende da destinação do produto</li>
+                    <li>Empresas do Simples Nacional não recuperam IPI</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Calculadora de Repercussão Econômica. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="pis-cofins-ipi.js"></script>
+</body>
+</html>
+

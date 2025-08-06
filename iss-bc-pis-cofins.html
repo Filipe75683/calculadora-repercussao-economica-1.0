@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISS da BC PIS e COFINS - Calculadora de Repercussão Econômica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Calculadora de Repercussão Econômica</h1>
+        <p>Exclusão do ISS da Base de Cálculo do PIS e COFINS</p>
+    </header>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="20-salarios.html">20 Salários</a></li>
+            <li><a href="pis-cofins-base.html">PIS e COFINS Própria Base</a></li>
+            <li><a href="credito-icms-combustivel.html">Crédito ICMS Combustível</a></li>
+            <li><a href="fretes-fora.html">Fretes Fora</a></li>
+            <li><a href="exclusao-frete-ipi.html">Exclusão Frete IPI</a></li>
+            <li><a href="gross-up.html">Gross Up</a></li>
+            <li><a href="iss-bc-pis-cofins.html" class="active">ISS da BC PIS e COFINS</a></li>
+            <li><a href="destrava.html">Destrava</a></li>
+            <li><a href="pis-cofins-ipi.html">PIS e COFINS sobre IPI</a></li>
+            <li><a href="icms-entrada-pis-cofins.html">ICMS Entrada PIS COFINS</a></li>
+            <li><a href="exclusao-credito-icms-irpj.html">Exclusão Crédito ICMS IRPJ</a></li>
+            <li><a href="exclusao-icms-pis-cofins-ipi.html">Exclusão ICMS PIS COFINS IPI</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <div class="form-section">
+            <h2>Exclusão do ISS da Base de Cálculo do PIS e COFINS</h2>
+            <p>Este cálculo determina a economia fiscal resultante da exclusão do ISS da base de cálculo do PIS e COFINS para empresas prestadoras de serviços.</p>
+            
+            <form id="iss-pis-cofins-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="faturamento-total">Faturamento Total 2023 (R$):</label>
+                        <input type="number" id="faturamento-total" name="faturamento-total" step="0.01" placeholder="Ex: 5566941.64" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="iss-recolhido">ISS Recolhido (R$):</label>
+                        <input type="number" id="iss-recolhido" name="iss-recolhido" step="0.01" placeholder="Ex: 149556.52" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="aliquota-iss">Alíquota ISS (%):</label>
+                        <input type="number" id="aliquota-iss" name="aliquota-iss" step="0.01" placeholder="Ex: 5.00" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="aliquota-pis">Alíquota PIS (%):</label>
+                        <input type="number" id="aliquota-pis" name="aliquota-pis" step="0.01" placeholder="Ex: 1.65" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="aliquota-cofins">Alíquota COFINS (%):</label>
+                        <input type="number" id="aliquota-cofins" name="aliquota-cofins" step="0.01" placeholder="Ex: 7.60" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="regime-tributario">Regime Tributário:</label>
+                        <select id="regime-tributario" name="regime-tributario" required>
+                            <option value="">Selecione o regime</option>
+                            <option value="lucro-real">Lucro Real</option>
+                            <option value="lucro-presumido">Lucro Presumido</option>
+                            <option value="simples">Simples Nacional</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tipo-servico">Tipo de Serviço:</label>
+                        <select id="tipo-servico" name="tipo-servico" required>
+                            <option value="">Selecione o tipo</option>
+                            <option value="consultoria">Consultoria</option>
+                            <option value="engenharia">Engenharia</option>
+                            <option value="advocacia">Advocacia</option>
+                            <option value="contabilidade">Contabilidade</option>
+                            <option value="medicina">Medicina</option>
+                            <option value="tecnologia">Tecnologia da Informação</option>
+                            <option value="outros">Outros</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="municipio">Município de Prestação:</label>
+                        <input type="text" id="municipio" name="municipio" placeholder="Ex: São Paulo - SP">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="periodo-analise">Período de Análise:</label>
+                    <select id="periodo-analise" name="periodo-analise">
+                        <option value="mensal">Mensal</option>
+                        <option value="trimestral">Trimestral</option>
+                        <option value="anual">Anual</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <div class="results-section">
+            <h3>Resultados dos Cálculos</h3>
+            
+            <div class="result-item">
+                <label>Base de Cálculo ISS (estimada):</label>
+                <div class="result-value" id="base-iss">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Faturamento sem ISS:</label>
+                <div class="result-value" id="faturamento-sem-iss">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>PIS sobre Base Original:</label>
+                <div class="result-value" id="pis-base-original">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>COFINS sobre Base Original:</label>
+                <div class="result-value" id="cofins-base-original">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>PIS sobre Base sem ISS:</label>
+                <div class="result-value" id="pis-sem-iss">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>COFINS sobre Base sem ISS:</label>
+                <div class="result-value" id="cofins-sem-iss">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Economia Total (PIS + COFINS):</label>
+                <div class="result-value" id="economia-total">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Percentual de Economia:</label>
+                <div class="result-value" id="percentual-economia">0,00%</div>
+            </div>
+        </div>
+
+        <div class="form-section mt-2">
+            <h3>Comparativo de Cenários</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cenário</th>
+                            <th>Base de Cálculo</th>
+                            <th>PIS</th>
+                            <th>COFINS</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Com ISS na Base</td>
+                            <td id="cenario-com-base">R$ 0,00</td>
+                            <td id="cenario-com-pis">R$ 0,00</td>
+                            <td id="cenario-com-cofins">R$ 0,00</td>
+                            <td id="cenario-com-total">R$ 0,00</td>
+                        </tr>
+                        <tr>
+                            <td>Sem ISS na Base</td>
+                            <td id="cenario-sem-base">R$ 0,00</td>
+                            <td id="cenario-sem-pis">R$ 0,00</td>
+                            <td id="cenario-sem-cofins">R$ 0,00</td>
+                            <td id="cenario-sem-total">R$ 0,00</td>
+                        </tr>
+                        <tr style="font-weight: bold; background-color: #e8f5e8;">
+                            <td>Economia</td>
+                            <td id="economia-base">R$ 0,00</td>
+                            <td id="economia-pis">R$ 0,00</td>
+                            <td id="economia-cofins">R$ 0,00</td>
+                            <td id="economia-total-table">R$ 0,00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="form-section mt-2">
+            <h3>Informações Legais</h3>
+            <div style="font-size: 0.9rem; color: #666;">
+                <p><strong>Base Legal:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>Lei Complementar 116/2003 (Lei do ISS)</li>
+                    <li>Lei 10.833/2003 (COFINS não cumulativo)</li>
+                    <li>Lei 10.637/2002 (PIS não cumulativo)</li>
+                    <li>Instrução Normativa RFB 1.911/2019</li>
+                </ul>
+                
+                <p style="margin-top: 1rem;"><strong>Jurisprudência:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>STJ - REsp 1.144.469/PR: "O ISS não compõe a base de cálculo do PIS e da COFINS"</li>
+                    <li>STF - RE 574.706: Exclusão do ISS da base de cálculo do PIS e COFINS</li>
+                </ul>
+                
+                <p style="margin-top: 1rem;"><strong>Observações:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>A exclusão do ISS da base do PIS e COFINS é direito das empresas prestadoras de serviços</li>
+                    <li>O cálculo considera que o ISS está embutido no faturamento</li>
+                    <li>É recomendável consultar um contador para aplicação prática</li>
+                    <li>A economia pode ser significativa para empresas com alto faturamento de serviços</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Calculadora de Repercussão Econômica. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="iss-bc-pis-cofins.js"></script>
+</body>
+</html>
+

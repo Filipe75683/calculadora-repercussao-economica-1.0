@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destrava - Calculadora de Repercussão Econômica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Calculadora de Repercussão Econômica</h1>
+        <p>Cálculo de Saldo que Pode ser Destravado</p>
+    </header>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="20-salarios.html">20 Salários</a></li>
+            <li><a href="pis-cofins-base.html">PIS e COFINS Própria Base</a></li>
+            <li><a href="credito-icms-combustivel.html">Crédito ICMS Combustível</a></li>
+            <li><a href="fretes-fora.html">Fretes Fora</a></li>
+            <li><a href="exclusao-frete-ipi.html">Exclusão Frete IPI</a></li>
+            <li><a href="gross-up.html">Gross Up</a></li>
+            <li><a href="iss-bc-pis-cofins.html">ISS da BC PIS e COFINS</a></li>
+            <li><a href="destrava.html" class="active">Destrava</a></li>
+            <li><a href="pis-cofins-ipi.html">PIS e COFINS sobre IPI</a></li>
+            <li><a href="icms-entrada-pis-cofins.html">ICMS Entrada PIS COFINS</a></li>
+            <li><a href="exclusao-credito-icms-irpj.html">Exclusão Crédito ICMS IRPJ</a></li>
+            <li><a href="exclusao-icms-pis-cofins-ipi.html">Exclusão ICMS PIS COFINS IPI</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <div class="form-section">
+            <h2>Cálculo de Saldo que Pode ser Destravado</h2>
+            <p>Este cálculo determina valores que podem ser destravados conforme operações específicas e CFOPs aplicáveis.</p>
+            
+            <form id="destrava-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="conta">Conta:</label>
+                        <input type="number" id="conta" name="conta" placeholder="Ex: 998" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cfop">CFOP:</label>
+                        <input type="number" id="cfop" name="cfop" placeholder="Ex: 7101" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="saldo-bloqueado">Saldo Bloqueado (R$):</label>
+                        <input type="number" id="saldo-bloqueado" name="saldo-bloqueado" step="0.01" placeholder="Ex: 100000.00" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tipo-operacao">Tipo de Operação:</label>
+                        <select id="tipo-operacao" name="tipo-operacao" required>
+                            <option value="">Selecione o tipo</option>
+                            <option value="credito-icms">Crédito de ICMS</option>
+                            <option value="credito-pis-cofins">Crédito de PIS/COFINS</option>
+                            <option value="credito-ipi">Crédito de IPI</option>
+                            <option value="outros-creditos">Outros Créditos</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="percentual-destrava">Percentual de Destrava (%):</label>
+                        <input type="number" id="percentual-destrava" name="percentual-destrava" step="0.01" placeholder="Ex: 100.00" value="100" max="100" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="periodo-referencia">Período de Referência:</label>
+                        <input type="month" id="periodo-referencia" name="periodo-referencia" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="motivo-bloqueio">Motivo do Bloqueio:</label>
+                        <select id="motivo-bloqueio" name="motivo-bloqueio">
+                            <option value="">Selecione o motivo</option>
+                            <option value="auditoria">Auditoria Fiscal</option>
+                            <option value="inconsistencia">Inconsistência Documental</option>
+                            <option value="prazo-vencido">Prazo Vencido</option>
+                            <option value="pendencia-legal">Pendência Legal</option>
+                            <option value="outros">Outros</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="data-bloqueio">Data do Bloqueio:</label>
+                        <input type="date" id="data-bloqueio" name="data-bloqueio">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="results-section">
+            <h3>Resultados dos Cálculos</h3>
+            
+            <div class="result-item">
+                <label>Saldo Total Bloqueado:</label>
+                <div class="result-value" id="saldo-total">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Valor Passível de Destrava:</label>
+                <div class="result-value" id="valor-destrava">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Valor que Permanece Bloqueado:</label>
+                <div class="result-value" id="valor-bloqueado-restante">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Percentual de Liberação:</label>
+                <div class="result-value" id="percentual-liberacao">0,00%</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Impacto Financeiro Mensal:</label>
+                <div class="result-value" id="impacto-mensal">R$ 0,00</div>
+            </div>
+        </div>
+
+        <div class="form-section mt-2">
+            <h3>Detalhamento por CFOP</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>CFOP</th>
+                            <th>Descrição</th>
+                            <th>Saldo Bloqueado</th>
+                            <th>% Destrava</th>
+                            <th>Valor Liberado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="cfop-detalhe">-</td>
+                            <td id="cfop-descricao">-</td>
+                            <td id="cfop-saldo">R$ 0,00</td>
+                            <td id="cfop-percentual">0,00%</td>
+                            <td id="cfop-liberado">R$ 0,00</td>
+                            <td id="cfop-status">Pendente</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="form-section mt-2">
+            <h3>Cronograma de Destrava</h3>
+            <div class="table-container">
+                <table id="cronograma-table">
+                    <thead>
+                        <tr>
+                            <th>Mês</th>
+                            <th>Valor a Destravar</th>
+                            <th>Valor Acumulado</th>
+                            <th>Saldo Restante</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Dados serão inseridos via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="text-center mt-2">
+                <button type="button" id="gerar-cronograma" class="btn">Gerar Cronograma</button>
+                <button type="button" id="simular-destrava" class="btn" style="margin-left: 1rem;">Simular Destrava</button>
+            </div>
+        </div>
+
+        <div class="form-section mt-2">
+            <h3>Informações Legais</h3>
+            <div style="font-size: 0.9rem; color: #666;">
+                <p><strong>Base Legal:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>Decreto 9.580/2018 (Regulamento do Imposto de Renda)</li>
+                    <li>Lei 9.430/1996 (Legislação Tributária Federal)</li>
+                    <li>Instrução Normativa RFB 1.252/2012</li>
+                </ul>
+                
+                <p style="margin-top: 1rem;"><strong>Procedimentos:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>Verificar documentação comprobatória</li>
+                    <li>Analisar prazos legais para destrava</li>
+                    <li>Protocolar pedido junto ao órgão competente</li>
+                    <li>Acompanhar andamento do processo</li>
+                </ul>
+                
+                <p style="margin-top: 1rem;"><strong>Observações:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>O destrava depende da regularização da situação que causou o bloqueio</li>
+                    <li>Alguns casos podem exigir garantia ou depósito judicial</li>
+                    <li>É recomendável acompanhamento jurídico especializado</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Calculadora de Repercussão Econômica. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="destrava.js"></script>
+</body>
+</html>
+

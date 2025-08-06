@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fretes Fora - Calculadora de Repercussão Econômica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Calculadora de Repercussão Econômica</h1>
+        <p>Cálculo de Fretes Iniciados Fora do Estado</p>
+    </header>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="20-salarios.html">20 Salários</a></li>
+            <li><a href="pis-cofins-base.html">PIS e COFINS Própria Base</a></li>
+            <li><a href="credito-icms-combustivel.html">Crédito ICMS Combustível</a></li>
+            <li><a href="fretes-fora.html" class="active">Fretes Fora</a></li>
+            <li><a href="exclusao-frete-ipi.html">Exclusão Frete IPI</a></li>
+            <li><a href="gross-up.html">Gross Up</a></li>
+            <li><a href="iss-bc-pis-cofins.html">ISS da BC PIS e COFINS</a></li>
+            <li><a href="destrava.html">Destrava</a></li>
+            <li><a href="pis-cofins-ipi.html">PIS e COFINS sobre IPI</a></li>
+            <li><a href="icms-entrada-pis-cofins.html">ICMS Entrada PIS COFINS</a></li>
+            <li><a href="exclusao-credito-icms-irpj.html">Exclusão Crédito ICMS IRPJ</a></li>
+            <li><a href="exclusao-icms-pis-cofins-ipi.html">Exclusão ICMS PIS COFINS IPI</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <div class="form-section">
+            <h2>Cálculo de Fretes Iniciados Fora do Estado</h2>
+            <p>Este cálculo determina o impacto dos fretes iniciados fora do estado nos CFOPs 5932 e 6932, considerando a porcentagem de ICMS aplicável.</p>
+            
+            <form id="fretes-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="faturamento-5932">Faturamento CFOP 5932 (R$):</label>
+                        <input type="number" id="faturamento-5932" name="faturamento-5932" step="0.01" placeholder="Ex: 1000000.00" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="faturamento-6932">Faturamento CFOP 6932 (R$):</label>
+                        <input type="number" id="faturamento-6932" name="faturamento-6932" step="0.01" placeholder="Ex: 1063730.74" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="percentual-frete-fora">Porcentagem Frete Fora (%):</label>
+                        <input type="number" id="percentual-frete-fora" name="percentual-frete-fora" step="0.001" placeholder="Ex: 2.530" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="percentual-icms">Porcentagem Média ICMS (%):</label>
+                        <input type="number" id="percentual-icms" name="percentual-icms" step="0.01" placeholder="Ex: 12.00" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="valor-frete-total">Valor Total dos Fretes (R$):</label>
+                        <input type="number" id="valor-frete-total" name="valor-frete-total" step="0.01" placeholder="Ex: 247647.69">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="estado-origem">Estado de Origem:</label>
+                        <select id="estado-origem" name="estado-origem">
+                            <option value="">Selecione o estado</option>
+                            <option value="AC">Acre</option>
+                            <option value="AL">Alagoas</option>
+                            <option value="AP">Amapá</option>
+                            <option value="AM">Amazonas</option>
+                            <option value="BA">Bahia</option>
+                            <option value="CE">Ceará</option>
+                            <option value="DF">Distrito Federal</option>
+                            <option value="ES">Espírito Santo</option>
+                            <option value="GO">Goiás</option>
+                            <option value="MA">Maranhão</option>
+                            <option value="MT">Mato Grosso</option>
+                            <option value="MS">Mato Grosso do Sul</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="PA">Pará</option>
+                            <option value="PB">Paraíba</option>
+                            <option value="PR">Paraná</option>
+                            <option value="PE">Pernambuco</option>
+                            <option value="PI">Piauí</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="RN">Rio Grande do Norte</option>
+                            <option value="RS">Rio Grande do Sul</option>
+                            <option value="RO">Rondônia</option>
+                            <option value="RR">Roraima</option>
+                            <option value="SC">Santa Catarina</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="SE">Sergipe</option>
+                            <option value="TO">Tocantins</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="estado-destino">Estado de Destino:</label>
+                        <select id="estado-destino" name="estado-destino">
+                            <option value="">Selecione o estado</option>
+                            <option value="AC">Acre</option>
+                            <option value="AL">Alagoas</option>
+                            <option value="AP">Amapá</option>
+                            <option value="AM">Amazonas</option>
+                            <option value="BA">Bahia</option>
+                            <option value="CE">Ceará</option>
+                            <option value="DF">Distrito Federal</option>
+                            <option value="ES">Espírito Santo</option>
+                            <option value="GO">Goiás</option>
+                            <option value="MA">Maranhão</option>
+                            <option value="MT">Mato Grosso</option>
+                            <option value="MS">Mato Grosso do Sul</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="PA">Pará</option>
+                            <option value="PB">Paraíba</option>
+                            <option value="PR">Paraná</option>
+                            <option value="PE">Pernambuco</option>
+                            <option value="PI">Piauí</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="RN">Rio Grande do Norte</option>
+                            <option value="RS">Rio Grande do Sul</option>
+                            <option value="RO">Rondônia</option>
+                            <option value="RR">Roraima</option>
+                            <option value="SC">Santa Catarina</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="SE">Sergipe</option>
+                            <option value="TO">Tocantins</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="periodo-analise">Período de Análise:</label>
+                        <select id="periodo-analise" name="periodo-analise">
+                            <option value="mensal">Mensal</option>
+                            <option value="trimestral">Trimestral</option>
+                            <option value="semestral">Semestral</option>
+                            <option value="anual">Anual</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="results-section">
+            <h3>Resultados dos Cálculos</h3>
+            
+            <div class="result-item">
+                <label>Faturamento Total (5932 + 6932):</label>
+                <div class="result-value" id="faturamento-total">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Valor dos Fretes Totais:</label>
+                <div class="result-value" id="fretes-totais">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Fretes Iniciados Fora do Estado:</label>
+                <div class="result-value" id="fretes-fora-valor">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>ICMS sobre Fretes Fora:</label>
+                <div class="result-value" id="icms-fretes-fora">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Economia/Benefício Fiscal:</label>
+                <div class="result-value" id="beneficio-fiscal">R$ 0,00</div>
+            </div>
+            
+            <div class="result-item">
+                <label>Percentual sobre Faturamento:</label>
+                <div class="result-value" id="percentual-faturamento">0,00%</div>
+            </div>
+        </div>
+
+        <div class="form-section mt-2">
+            <h3>Detalhamento por CFOP</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>CFOP</th>
+                            <th>Descrição</th>
+                            <th>Faturamento</th>
+                            <th>% Frete Fora</th>
+                            <th>Valor Frete Fora</th>
+                            <th>ICMS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>5932</td>
+                            <td>Prestação de serviço de transporte iniciada em UF diferente da do prestador</td>
+                            <td id="cfop-5932-fat">R$ 0,00</td>
+                            <td id="cfop-5932-perc">0,00%</td>
+                            <td id="cfop-5932-frete">R$ 0,00</td>
+                            <td id="cfop-5932-icms">R$ 0,00</td>
+                        </tr>
+                        <tr>
+                            <td>6932</td>
+                            <td>Prestação de serviço de transporte iniciada em UF diferente da do prestador</td>
+                            <td id="cfop-6932-fat">R$ 0,00</td>
+                            <td id="cfop-6932-perc">0,00%</td>
+                            <td id="cfop-6932-frete">R$ 0,00</td>
+                            <td id="cfop-6932-icms">R$ 0,00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="form-section mt-2">
+            <h3>Informações Legais</h3>
+            <div style="font-size: 0.9rem; color: #666;">
+                <p><strong>CFOPs Relacionados:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li><strong>5932:</strong> Prestação de serviço de transporte iniciada em UF diferente da do prestador</li>
+                    <li><strong>6932:</strong> Prestação de serviço de transporte iniciada em UF diferente da do prestador</li>
+                </ul>
+                
+                <p style="margin-top: 1rem;"><strong>Base Legal:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>Lei Complementar 116/2003 (ISS)</li>
+                    <li>Lei Complementar 87/1996 (ICMS)</li>
+                    <li>Convênio ICMS 106/2017</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Calculadora de Repercussão Econômica. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="fretes-fora.js"></script>
+</body>
+</html>
+
